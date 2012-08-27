@@ -33,7 +33,7 @@ You can use the CMake Gui or command line.
 Copyright
 ---------
 
-Copyright © 2011, Augmate Corporation LLC.
+Copyright © 2012, Augmate Corporation LLC.
 
 This file is part of VERSE.
 
