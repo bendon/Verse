@@ -13,6 +13,6 @@ file(GLOB lib_hdrs *.h)
 
 set(the_target "libqrdecode")
 
-add_library(${the_target} ${lib_srcs} ${lib_hdrs})
+add_library(${the_target} STATIC  ${lib_srcs} ${lib_hdrs})
 add_dependencies(${the_target} ${OpenCV_LIBS})
 target_link_libraries(${the_target} ${OpenCV_LIBS})

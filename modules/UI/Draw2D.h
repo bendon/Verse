@@ -1,6 +1,13 @@
 #ifndef UI_Draw2D_h
 #define UI_Draw2D_h
 
+#ifdef WIN32
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#endif
+
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
@@ -10,6 +17,7 @@
 #endif
 
 #include <stdio.h>
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 namespace UI {

@@ -4,6 +4,13 @@ PROJECT(VERSE_API)
 SET(PROJECT_VERSION "0.1")
 # load macros
 include(cmake/macros.cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
+SET(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}")
+SET(RUNTIME_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE PATH "Directory for dlls and binaries")
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE PATH "Directory for binaries")
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE PATH "Directory for dlls")
+
 
 # Opencv Package
 FIND_PACKAGE( OpenCV REQUIRED )
@@ -14,6 +21,9 @@ ENDIF()
 # OpenGL Package
 FIND_PACKAGE( OpenGL REQUIRED )
 
+# GLUT package
+find_package(GLUT)#standard package
+
 # FreeType Package
 FIND_PACKAGE( Freetype REQUIRED )
 
@@ -23,6 +33,10 @@ IF (NOT LIBXML2_FOUND)
 	include_directories (${VERSE_API_SOURCE_DIR}/3rdparty/libxml2/include)
 ENDIF (NOT LIBXML2_FOUND)
 
+FIND_PACKAGE ( VUZIX REQUIRED )
+FIND_PACKAGE ( SPHINXBASE REQUIRED )
+FIND_PACKAGE ( POCKETSPHINX REQUIRED )
+FIND_PACKAGE (PTHREAD REQUIRED)
 
 #Libdecodeqr variables. QR
 set(QR_LIBRARY libqrdecode)
@@ -36,22 +50,23 @@ set(ASSIMP_INCLUDE ${VERSE_API_SOURCE_DIR}/3rdparty/assimp/include)
 set(ARUCO_LIBRARY aruco)
 set(ARUCO_INCLUDE ${VERSE_API_SOURCE_DIR}/3rdparty/aruco/src)
 
-
 include_directories( 
 	${OpenGL_INCLUDE_DIR}
 	${OpenCV_INCLUDE_DIR}
-	${FREETYPE_INCLUDE_DIR_freetype2}
-	${FREETYPE_INCLUDE_DIR_ft2build}
-        ${LIBXML2_INCLUDE_DIR}
+	${FREETYPE_INCLUDE_DIRS}
+	${LIBXML2_INCLUDE_DIR}
 	${QR_INCLUDE}
-        ${ASSIMP_INCLUDE}
-        ${ARUCO_INCLUDE}
+	${ASSIMP_INCLUDE}
+	${ARUCO_INCLUDE}
+	${VUZIX_INCLUDE}
+	${SPHINXBASE_INCLUDE}
+	${POCKETSPHINX_INCLUDE}
+	${PTHREAD_INCLUDE}
 )
 
 #Process folders
 add_subdirectory(3rdparty)
 add_subdirectory(modules)
-add_subdirectory(samples)
 
 
 #Create Doxygen code documentation.

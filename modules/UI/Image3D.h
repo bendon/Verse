@@ -1,16 +1,13 @@
 /* 
- * File:   Image2D.h
+ * File:   Image3D.h
  * Author: damiles
  *
  * Created on 23 de enero de 2012, 22:11
  */
 
-#ifndef IMAGE2D_H
-#define	IMAGE2D_H
+#ifndef IMAGE3D_H
+#define	IMAGE3D_H
 
-
-
-#include "Draw2D.h"
 #include <Core/DisplayObject.h>
 
 #include <opencv2/core/core.hpp>
@@ -28,11 +25,11 @@ namespace UI {
     
     using namespace cv;
     
-class Image2D: public Core::DisplayObject  {
+class Image3D: public Core::DisplayObject  {
 public:
-    Image2D();
-    Image2D(const Image2D& orig);
-    virtual ~Image2D();
+    Image3D();
+    Image3D(const Image3D& orig);
+    virtual ~Image3D();
     void draw(int selection=0);
     void loadImage(const char* file);
     void loadImage(Mat img);
@@ -44,5 +41,5 @@ private:
 
 };
 }
-#endif	/* IMAGE2D_H */
+#endif	/* Image3D_H */
 

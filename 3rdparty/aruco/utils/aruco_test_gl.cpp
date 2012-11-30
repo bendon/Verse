@@ -27,6 +27,10 @@ or implied, of Rafael Muñoz Salinas.
 ********************************/
 #include <iostream>
 
+#ifdef WIN32
+#include <windows.h>
+#endif
+
 #include <fstream>
 #include <sstream>
 #ifdef __APPLE__

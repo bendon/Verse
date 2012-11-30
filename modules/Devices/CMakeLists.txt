@@ -6,3 +6,6 @@ file(GLOB lib_srcs *.cpp)
 file(GLOB lib_hdrs *.h)
 
 add_library(VerseDevices STATIC ${lib_srcs} ${lib_hdrs})
+
+add_dependencies(VerseDevices ${VUZIX_LIBRARY})
+target_link_libraries(VerseDevices ${VUZIX_LIBRARY})

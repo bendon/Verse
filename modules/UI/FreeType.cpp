@@ -76,8 +76,12 @@ inline void move_raster_y(int y) {
 int getWidthSize(const font_data &font,const string text){
 	int w=0;
 	for(int i=0;text[i];i++) {
-		const char_data &cdata=*font.chars[text[i]];
-    	w+=cdata.advance;
+		try{
+			if(text[i]>0 && text[i]<255){
+    			const char_data &cdata=*font.chars[text[i]];
+				w+=cdata.advance;
+			}
+		}catch(char *excp){}
     }
     return w;
 }
@@ -127,6 +131,7 @@ void print(const font_data &ft_font, int vertical, const char *fmt, ...)  {
 
 	for(int i=0;text[i];i++) {
 		const char_data &cdata=*ft_font.chars[text[i]];
+		if(text[i]>0 && text[i]<255){
                 if(vertical){
                     move_raster_y(cdata.left);
                     move_raster_x(ft_font.h+-cdata.h-cdata.move_up);
@@ -144,7 +149,7 @@ void print(const font_data &ft_font, int vertical, const char *fmt, ...)  {
                     move_raster_y(-cdata.move_up);
                     move_raster_x(cdata.advance- cdata.left);
                 }
-
+		}
 	}
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT ,old_unpack);

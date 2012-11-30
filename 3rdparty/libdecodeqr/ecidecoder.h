@@ -17,8 +17,8 @@
 #include <stdio.h>
 
 #ifdef WIN32
-#include <winsock2.h>
 #define snprintf _snprintf
+#include <Windows.h>
 #else
 #include <netinet/in.h>
 #endif

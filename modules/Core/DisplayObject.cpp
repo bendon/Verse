@@ -6,7 +6,8 @@ DisplayObject::DisplayObject()
 {
 	type="DisplayObject";
 	alpha=1;
-        visible=true;
+    visible=true;
+	this->setVisibleMode(Devices::BOTH_EYES);
 }
 
 int DisplayObject::hitTestObject()
@@ -26,18 +27,32 @@ void DisplayObject::draw(int selection)
 
 void DisplayObject::render(int selection)
 {
-    if(visible)
+	Devices::Platform *platform=Devices::Platform::Instance();
+	if(visible && (visibleMode==Devices::BOTH_EYES || visibleMode==platform->getActualMode()))
     {
-        if(selection)
+		//Save position for x
+		float tempX=x;
+	    if(selection)
                 glLoadName(id);
-	draw(selection);
-	for(int i=0; i<childs.size(); i++)
-	{
-		DisplayObject* child=childs[i];
-		child->mouse_x=mouse_x;
-                child->mouse_y=mouse_y;
-		child->render(selection);	
-	}
+		if(visibleMode==Devices::BOTH_EYES){
+			if(platform->getActualMode()==Devices::LEFT_EYE){
+				x=tempX+25;
+			}else if(platform->getActualMode()==Devices::RIGHT_EYE){
+				x=tempX-25;
+			}
+		}
+		draw(selection);
+		//Restore X position
+		x=tempX;
+
+		for(int i=0; i<childs.size(); i++)
+		{
+			DisplayObject* child=childs[i];
+			child->mouse_x=mouse_x;
+			child->mouse_y=mouse_y;
+			child->render(selection);	
+		}
+		
     }
 }
 
@@ -72,6 +87,23 @@ void DisplayObject::setColor(int r, int g, int b)
 	fblue=(float)b/255.0f;
 }
 
+
+void DisplayObject::setVisibleMode(int mode){
+	visibleMode=mode;
+	for(int i=0; i<childs.size(); i++)
+	{
+		DisplayObject* child=childs[i];
+		child->setVisibleMode(mode);	
+	}
+
+}
+
+void DisplayObject::setPosition(float x, float y, float z){
+	this->x=x;
+	this->y=y;
+	this->z=z;
+
+}
 
 void DisplayObject::setOrthographicProjection(int pick) {
     /*
@@ -110,7 +142,7 @@ void DisplayObject::setOrthographicProjection(int pick) {
     glPushMatrix();
     glLoadIdentity();
     if (pick)
-	gluPickMatrix(mouse_x,  viewport[3]-mouse_y, 1.0, 1.0, viewport);
+		gluPickMatrix(mouse_x,  viewport[3]-mouse_y, 1.0, 1.0, viewport);
     glOrtho(0, viewport[2], viewport[3], 0, -5, 1);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

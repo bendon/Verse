@@ -1,6 +1,13 @@
 #ifndef FREE_NEHE_H
 #define FREE_NEHE_H
 
+#ifdef WIN32
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#endif
+
 //FreeType Headers
 #include <ft2build.h>
 #include <freetype/freetype.h>

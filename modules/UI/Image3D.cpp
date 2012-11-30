@@ -1,40 +1,40 @@
 /* 
- * File:   Image2D.cpp
+ * File:   Image3D.cpp
  * Author: damiles
  * 
  * Created on 23 de enero de 2012, 22:11
  */
 
-#include "Image2D.h"
+#include "Image3D.h"
 namespace UI {
     
-Image2D::Image2D() 
+Image3D::Image3D() 
 {
     
 }
 
-Image2D::Image2D(const Image2D& orig) 
+Image3D::Image3D(const Image3D& orig) 
 {
 }
 
-Image2D::~Image2D() 
+Image3D::~Image3D() 
 {
 }
 
-void Image2D::loadImage(const char* file)
+void Image3D::loadImage(const char* file)
 {
     //Load image
     image=imread(file);
     refreshTexture();
 }
 
-void Image2D::loadImage(Mat img)
+void Image3D::loadImage(Mat img)
 {
     image=img;
     refreshTexture();
 }
 
-void Image2D::refreshTexture()
+void Image3D::refreshTexture()
 {
     //Delete texture if exist
     if (&texture)
@@ -48,8 +48,8 @@ void Image2D::refreshTexture()
     
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	int dataSize=image.cols*image.rows*image.channels();
-    /*unsigned char* data=new unsigned char[dataSize];
+    int dataSize=image.cols*image.rows*3;
+    unsigned char* data=new unsigned char[dataSize];
     int j=0;
     for( int y = 0; y < image.rows; y++ )
     { 
@@ -61,25 +61,25 @@ void Image2D::refreshTexture()
                          j++;           
                     }
                  }
-    }*/
-	unsigned char* data= image.data;
-	if(image.channels()==3){
-		gluBuild2DMipmaps(GL_TEXTURE_2D, 3, image.cols, image.rows, GL_BGR_EXT, GL_UNSIGNED_BYTE, data);
-	}else if(image.channels()==4){
-		gluBuild2DMipmaps(GL_TEXTURE_2D, 4, image.cols, image.rows, GL_BGRA_EXT, GL_UNSIGNED_BYTE, data);
-	}
-	//delete data;    
+    }
+    gluBuild2DMipmaps(GL_TEXTURE_2D, 3, image.cols, image.rows, GL_BGR_EXT, GL_UNSIGNED_BYTE, data);
+    delete data;    
 }
-void Image2D::draw(int selection)
+void Image3D::draw(int selection)
 {
-    setOrthographicProjection(selection);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture( GL_TEXTURE_2D, texture ); //bind the texture
-    Draw2D::Rectangle(x, y, width, height);
-    glBindTexture(GL_TEXTURE_2D, 0);
-    restorePerspectiveProjection();
+    glBegin(GL_QUADS);
+    // Front Face
+    glTexCoord2f(0.0f, 0.0f); glVertex3f( 0.0f+x,			0.0f+y,				z);  // Bottom Left Of The Texture and Quad
+    glTexCoord2f(1.0f, 0.0f); glVertex3f( (1.0f*scalex)+x,	0.0f+y,				z);  // Bottom Right Of The Texture and Quad
+    glTexCoord2f(1.0f, 1.0f); glVertex3f( (1.0f*scalex)+x,	(1.0f*scaley)+y,	z);  // Top Right Of The Texture and Quad
+    glTexCoord2f(0.0f, 1.0f); glVertex3f( 0.0f+x,			(1.0f*scaley)+y,	z);  // Top Left Of The Texture and Quad
+	glEnd();
 
+	glBindTexture(GL_TEXTURE_2D, 0);
+    
 }
 
 }

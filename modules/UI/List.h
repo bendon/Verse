@@ -1,5 +1,5 @@
-#ifndef UI_Button_h
-#define UI_Button_h
+#ifndef UI_List_h
+#define UI_List_h
 
 
 
@@ -9,6 +9,7 @@
 #include "Draw2D.h"
 #include "FreeType.h"
 #include "TextField.h"
+#include "Button.h"
 
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
@@ -24,23 +25,29 @@ namespace UI {
 
 using std::string;
 
-class Button : public Core::DisplayObject {
+class ListData{
+public:
+	//ListData();
+	string icon;
+	int status;
+	string label;
+	int id;
+};
+
+class List : public Core::DisplayObject {
 	public:
-                Button();
-		Button(string label, freetype::font_data* f);
+        List();
+		List(string title, vector<ListData> data, freetype::font_data* f);
+		void setData(vector<ListData> data);
 		void draw(int selection=0);
-		string label;
+		vector<ListData> data;
+		vector<Button*> buttons;
 		freetype::font_data* font;
         TextField *textField;
-        float overRed, overBlue, overGreen;
-        int isOver;
-		int textOffsetY,textOffsetX;
-        Core::TCallback<Button> overCallBack;
-        void onOver(Events::Event *ev);
-		bool rounded;
+		string label;
 		void setPosition(float x, float y);
 };
 
 } /* End of namespace UI */
 
-#endif // UI_Button_h
+#endif // UI_List_h

@@ -6,7 +6,14 @@
 
 namespace Events {
 
-class VoiceEvent : public Event {};
+class VoiceEvent : public Event {
+public:
+	VoiceEvent();
+    std::string data;
+    static const std::string VOICE_READY;
+    static const std::string VOICE_LISTENING;
+	static const std::string VOICE_RECOGNIZED;
+};
 
 } /* End of namespace Events */
 

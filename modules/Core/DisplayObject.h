@@ -2,6 +2,14 @@
 #define Core_DisplayObject_h
 
 #include "EventDispatcher.h"
+#include <Devices/Platform.h>
+
+#ifdef WIN32
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#endif
 
 #include <vector>
 #ifdef __APPLE__
@@ -29,9 +37,12 @@ class DisplayObject : public EventDispatcher {
     void setBackgroundColor(int r, int g, int b);
     void setColor(int r, int g, int b);
     DisplayObject* searchChildId(int idObject);
-    
+    void setVisibleMode(int mode);
+	void setPosition(float x, float y, float z);
+
  public:
     int visible;
+	int visibleMode;
     float x;
     float y;
     int width;

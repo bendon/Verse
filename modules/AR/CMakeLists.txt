@@ -7,5 +7,5 @@ file(GLOB lib_hdrs *.h)
 
 add_library(VerseAR STATIC ${lib_srcs} ${lib_hdrs})
 
-add_dependencies(VerseAR ${QR_LIBRARY})
-target_link_libraries(VerseAR ${QR_LIBRARY} )
+add_dependencies(VerseAR ${QR_LIBRARY} ${POCKETSPHINX_LIBRARY} ${SPHINXBASE_LIBRARY})
+target_link_libraries(VerseAR ${QR_LIBRARY}  ${POCKETSPHINX_LIBRARY} ${SPHINXBASE_LIBRARY})

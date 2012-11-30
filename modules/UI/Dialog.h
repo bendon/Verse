@@ -1,6 +1,7 @@
 #ifndef UI_Dialog_h
 #define UI_Dialog_h
 
+
 #include <Core/DisplayObject.h>
 #include <Events/Event.h>
 #include <Events/MouseEvent.h>

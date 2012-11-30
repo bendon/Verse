@@ -133,7 +133,7 @@ void Model3D::recursiveTextureLoad(const struct aiScene *sc, const struct aiNode
 				glBindTexture(GL_TEXTURE_2D, newTexture.hTexture);
 				//glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA, w, h, 0, GL_BGR,GL_UNSIGNED_BYTE,(GLvoid*)pixeles );
 				//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-                                gluBuild2DMipmaps(GL_TEXTURE_2D, 3, imagen.cols, imagen.rows, GL_BGR, GL_UNSIGNED_BYTE, data);
+                gluBuild2DMipmaps(GL_TEXTURE_2D, 3, imagen.cols, imagen.rows, GL_BGR_EXT, GL_UNSIGNED_BYTE, data);
                                 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

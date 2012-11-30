@@ -10,12 +10,21 @@
 
 namespace UI {
 
-
 GLBaseApp::GLBaseApp() {
     
 }
 
-GLBaseApp::GLBaseApp(const GLBaseApp& orig) {
+/*GLBaseApp::GLBaseApp(const GLBaseApp& orig) {
+	g_EyeSeparation = DEFAULT_SEPARATION;
+	g_FocalLength	= DEFAULT_FOCAL_LENGTH;	
+	g_CameraXPosition=0.0f, g_CameraYPosition=0.0f, g_CameraZPosition=0.0f;
+	stereo_mode=MONO;
+}*/
+
+GLBaseApp::GLBaseApp(Devices::Platform *p)
+{ 
+	platform=p;
+	
 }
 
 GLBaseApp::~GLBaseApp() {
@@ -24,7 +33,32 @@ GLBaseApp::~GLBaseApp() {
 void GLBaseApp::render()
 {
     //Draw buffer
-    DisplayObject::render();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+	if (platform->stereo_mode == Devices::SIDE_X_SIDE){
+			// Render left eye frame
+			platform->SetStereoViewport( Devices::LEFT_EYE );
+			platform->SetViewingFrustum( Devices::LEFT_EYE );
+			glDrawBuffer(GL_BACK_LEFT); 
+			DisplayObject::render();
+				
+			glFinish();
+
+			// Render MATCHING right eye frame; (No tracking or animation movement from the left eyes frame.)	
+			platform->SetStereoViewport( Devices::RIGHT_EYE );
+			platform->SetViewingFrustum( Devices::RIGHT_EYE );
+			glDrawBuffer(GL_BACK_RIGHT);  
+			DisplayObject::render();
+
+			glFinish();
+	}else if(platform->stereo_mode==Devices::MONO){
+		platform->SetStereoViewport( Devices::MONO_EYES );
+		platform->SetViewingFrustum( Devices::MONO_EYES );
+		glDrawBuffer(GL_BACK);   
+		DisplayObject::render();
+		glFinish();
+	} 
     
 }
 
@@ -89,6 +123,7 @@ void GLBaseApp::selection(Events::MouseEvent e)
     if(visible)
     {
 	draw(1);
+
 	for(int i=0; i<childs.size(); i++)
 	{
 		DisplayObject* child=childs[i];
