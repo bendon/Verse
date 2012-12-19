@@ -4,7 +4,7 @@ VERSE API Library
 Description
 ----------
 
-The Verse API presents new ways to create augmented reality applications 
+The Verse API offers new ways to create augmented reality applications 
 for any type of device or eyewearable, with a set of utils and 
 user interfaces based on OpenGL/ES that make it easy to create AR apps.
 
