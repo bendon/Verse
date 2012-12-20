@@ -2,16 +2,16 @@ VERSE API Library
 =================
 
 Description
------------
+----------
 
-Verse api define new way to create Augmented Reality Applications 
-for any type of device and eyewearable, with a set of utils and 
-user interfaces based on Opengl/ES that make easy create AR apps.
+The Verse API offers new ways to create augmented reality applications 
+for any type of device or eyewearable, with a set of utils and 
+user interfaces based on OpenGL/ES that make it easy to create AR apps.
 
 Requirements
 ------------
 
-For compile this library you need this libraries and applications:
+To compile this library you need these libraries and applications:
 
 * OpenGL
 * OpenCV
@@ -22,7 +22,7 @@ Compilation
 -----------
 
 First create your build scripts with CMake.
-You can use the CMake Gui or command line.
+You can use the CMake GUI or command line.
 
 	mkdir build
 	cd build
